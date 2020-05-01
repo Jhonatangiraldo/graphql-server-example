@@ -1,12 +1,17 @@
-const { graphql } = require('graphql');
 const schema = require('./graphql/index');
 
+const express = require('express');
+const graphqlHTTP = require('express-graphql');
 
-async function main(param) {
-  const result = await graphql(schema, `{ ${param} }`);
-  console.log(result.data.getPeople);
-  
-}
+const app = express();
 
-const param = process.argv[2];
-main(param);
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+    context: { helper: () => console.log('this is a helper')}
+  })
+);
+
+app.listen(4000);

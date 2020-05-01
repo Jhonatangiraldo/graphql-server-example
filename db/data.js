@@ -24,3 +24,10 @@ const cities = [
   { id: 2, name: 'Chinchina' },
   { id: 3, name: 'Palestina' },
 ];
+
+module.exports = {
+  users,
+  votes,
+  boxes,
+  cities,
+};
