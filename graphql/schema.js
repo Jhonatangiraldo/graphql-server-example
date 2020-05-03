@@ -8,15 +8,23 @@ const {
 } = require('graphql');
 
 const { getPerson, getPeople } = require('./queries');
+const api = require('../db/api');
 
 const schema = new buildSchema(`
+  type Person {
+    id: ID!
+    name: String
+  }
+
   type Query {
-    hello: String
+    getPerson(id: Int!): Person
+    getPeople: [Person]
   }
 `);
 
 const root = {
-  hello: "Hello"
+  getPerson: ({ id }) => api.getPerson(id),
+  getPeople: () => api.getPeople(),
 }
 
 module.exports = { schema, root };
