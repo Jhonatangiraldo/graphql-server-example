@@ -1,30 +1,17 @@
-const {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLNonNull,
-  buildSchema,
-} = require('graphql');
+const { buildSchema } = require('graphql');
 
-const { getPerson, getPeople } = require('./queries');
-const api = require('../db/api');
+const { PersonType, QueryType } = require('./types');
+
+const { getPerson, getPeople } = require('../resolvers/index');
 
 const schema = new buildSchema(`
-  type Person {
-    id: ID!
-    name: String
-  }
-
-  type Query {
-    getPerson(id: Int!): Person
-    getPeople: [Person]
-  }
+  ${PersonType}
+  ${QueryType}
 `);
 
 const root = {
-  getPerson: ({ id }) => api.getPerson(id),
-  getPeople: () => api.getPeople(),
-}
+  getPerson,
+  getPeople,
+};
 
 module.exports = { schema, root };

@@ -1,17 +1,15 @@
-const {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLNonNull
-} = require('graphql');
+const PersonType = `
+  type Person {
+    id: ID!
+    name: String
+  }
+`;
 
-const PersonType = new GraphQLObjectType({
-  name: 'PersonType',
-  fields: {
-    id: { type: GraphQLInt },
-    name: { type: GraphQLString },
-  },
-});
+const QueryType = `
+  type Query {
+    getPerson(id: Int!): Person
+    getPeople: [Person]
+  }
+`;
 
-module.exports = { PersonType };
+module.exports = { PersonType, QueryType };
